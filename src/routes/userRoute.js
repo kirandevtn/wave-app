@@ -29,6 +29,10 @@ user_route.get("/",userController.loadLogin);
 user_route.post("/",userController.login);
 user_route.get("/logout",userController.logout);
 user_route.get("/dashboard",userController.loadDashboard);
+user_route.get('/health', (req, res) => {
+  // Respond with a success status
+  res.status(200).send('OK');
+});
 user_route.get("*",(req,res)=>{
     res.redirect("/");
 });
