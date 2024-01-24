@@ -1,0 +1,28 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag wavy:$(date +%s)
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
+    - name: Tag the Docker image
+      run: docker tag wavy:$(date +%s) "${{ secrets.DOCKER_HUB_USERNAME }}/wavy:latest"
+
+    - name: Push the Docker image to Docker Hub
+      run: docker push "${{ secrets.DOCKER_HUB_USERNAME }}/wavy:latest"
