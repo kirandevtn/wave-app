@@ -19,7 +19,7 @@ jobs:
       run: docker build . --file Dockerfile --tag wavy:$(date +%s)
 
     - name: Log in to Docker Hub
-      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}"
 
     - name: Tag the Docker image
       run: docker tag wavy:$(date +%s) "${{ secrets.DOCKER_HUB_USERNAME }}/wavy:latest"
