@@ -13,21 +13,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
     - uses: actions/checkout@v3
 
-    - name: Set up QEMU
-      run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-
+    - name: Build Docker image
     - name: Build the Docker image
-      uses: docker/buildx-action@v2
-      with:
-        context: .
-        file: Dockerfile
-        tags: kirandevtn/wavy:latest
-        platforms: linux/amd64,linux/arm64
+      run: docker build . --file Dockerfile --tag kirandevtn/wavy:latest
 
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
     - name: Log in to Docker Hub with Access Token
       run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login --username "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
+    - name: Push Docker image to Docker Hub
     - name: Push the Docker image to Docker Hub
       run: docker push kirandevtn/wavy:latest
+
+    - name: Check for errors
+      run: echo "Checks complete!"
