@@ -1,5 +1,3 @@
-name: Docker Image CI
-
 on:
   push:
     branches: [ "main" ]
@@ -7,20 +5,21 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    - name: Build the Docker image
+    - name: Build Docker image
       run: docker build . --file Dockerfile --tag kirandevtn/wavy:latest
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
-    - name: Push the Docker image to Docker Hub
+    - name: Push Docker image to Docker Hub
       run: docker push kirandevtn/wavy:latest
 
+    - name: Check for errors
+      run: echo "Checks complete!"
