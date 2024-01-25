@@ -15,11 +15,25 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Get commit hash and timestamp
+      id: get_commit_and_timestamp
+      run: |
+        COMMIT_HASH=$(echo $GITHUB_SHA | cut -c1-7)
+        TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+        echo "::set-output name=commit_hash::${COMMIT_HASH}"
+        echo "::set-output name=timestamp::${TIMESTAMP}"
+
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag kirandevtn/wavy:latest
+      run: |
+        COMMIT_HASH=${{ steps.get_commit_and_timestamp.outputs.commit_hash }}
+        TIMESTAMP=${{ steps.get_commit_and_timestamp.outputs.timestamp }}
+        docker buildx build --file Dockerfile --tag kirandevtn/wavy:latest --tag kirandevtn/wavy:$COMMIT_HASH-$TIMESTAMP .
 
     - name: Log in to Docker Hub with Access Token
       run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login --username "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
     - name: Push the Docker image to Docker Hub
-      run: docker push kirandevtn/wavy:latest
+      run: docker push kirandevtn/wavy:latest && docker push kirandevtn/wavy:$COMMIT_HASH-$TIMESTAMP
