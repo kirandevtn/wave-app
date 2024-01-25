@@ -17,13 +17,20 @@ jobs:
 
     - name: Build the Docker image
       run: |
+        # Extract the first 7 characters of the commit hash
         COMMIT_HASH=$(echo $GITHUB_SHA | cut -c1-7)
+        
+        # Get the current timestamp in the format YYYYMMDDHHMMSS
         TIMESTAMP=$(date +"%Y%m%d%H%M%S")
 
+        # Build the Docker image and tag it
         docker build . --file Dockerfile --tag kirandevtn/wavy:latest --tag kirandevtn/wavy:$COMMIT_HASH-$TIMESTAMP
 
     - name: Log in to Docker Hub with Access Token
       run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login --username "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
     - name: Push the Docker image to Docker Hub
-      run: docker push kirandevtn/wavy:latest && docker push kirandevtn/wavy:$COMMIT_HASH-$TIMESTAMP
+      run: |
+        # Push both the latest tag and the specific commit hash + timestamp tag
+        docker push kirandevtn/wavy:latest
+        docker push kirandevtn/wavy:$COMMIT_HASH-$TIMESTAMP
