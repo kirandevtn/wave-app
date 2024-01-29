@@ -13,6 +13,7 @@ RUN npm install
 # Stage 2: Production Stage
 FROM node:21-alpine as production
 
+
 # Copy only necessary files from the build stage
 COPY --from=build /app /app
 
