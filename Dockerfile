@@ -4,6 +4,7 @@ FROM node:21-alpine as build
 # Copy package.json and package-lock.json to the build directory
 COPY package.json package-lock.json src /app/
 
+
 # Set working directory
 WORKDIR /app
 
