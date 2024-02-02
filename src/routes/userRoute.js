@@ -2,7 +2,11 @@ const express = require("express");
 user_route = express();
 const bodyParser = require("body-parser");
 const session = require("express-session");
-user_route.use(session({secret: process.env.SESSION_SECRET}));
+user_route.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false, 
+    saveUninitialized: true 
+  }));
 user_route.use(bodyParser.json());
 user_route.use(bodyParser.urlencoded({extended: true}));
 user_route.set("view engine", "ejs");
