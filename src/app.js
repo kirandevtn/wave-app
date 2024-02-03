@@ -3,8 +3,8 @@ const mongoose  = require("mongoose");
 const app = require("express")();
 const http = require("http").Server(app);
 mongoose.connect(process.env.MONGO_URL);
-const User  = require("./models/userModel")
-const userRoute = require("./routes/userRoute")
+const User  = require("./models/userModel");
+const userRoute = require("./routes/userRoute");
 app.use("/",userRoute);
 const Chat = require("./models/chatModel");
 const crypto = require("crypto");
