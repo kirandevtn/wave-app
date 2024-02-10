@@ -1,0 +1,8 @@
+# Chart.yaml
+
+apiVersion: v2
+name: your-app
+description: A Helm chart for managing your application deployment, service, and ingress
+type: application
+version: 0.1.0
+appVersion: 1.0.0

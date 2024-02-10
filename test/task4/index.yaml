@@ -1,0 +1,15 @@
+apiVersion: v1
+entries:
+  your-app:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2024-02-06T18:01:59.376388+05:30"
+    description: A Helm chart for managing your application deployment, service, and
+      ingress
+    digest: 88fcd6a0ae7c4252f11957f18a28142121c6e98f214cd469cb871c11934157a7
+    name: your-app
+    type: application
+    urls:
+    - https://kirandevtn.github.io/helm-repo/your-app-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-02-06T18:01:59.375711+05:30"

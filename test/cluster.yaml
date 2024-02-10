@@ -1,0 +1,50 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: admin-eks-cluster
+  region: ap-south-1
+
+vpc:
+  id: vpc-030c8ddb139c52705
+  cidr: 10.0.0.0/24
+  subnets:
+    private:
+      ap-south-1a:
+        id: subnet-05994021dd9ed7ad8
+        cidr: 10.0.0.0/26
+      ap-south-1b:
+        id: subnet-07c5699d677dea27b
+        cidr: 10.0.0.64/26
+    public:
+      ap-south-1a:
+        id: subnet-034f52d07513e3031
+        cidr: 10.0.0.128/26
+      ap-south-1b:
+        id: subnet-0e6a5f27424be2832
+        cidr: 10.0.0.192/26
+
+nodeGroups:
+  - name: ng-public
+    instanceType: t2.micro
+    desiredCapacity: 3
+    minSize: 2
+    maxSize: 4
+    volumeSize: 20
+    tags:
+      nodegroup-type: public
+    subnets:
+      - ap-south-1a
+      - ap-south-1b
+
+  - name: ng-private
+    instanceType: t2.micro
+    desiredCapacity: 3
+    minSize: 2
+    maxSize: 4
+    volumeSize: 20
+    tags:
+      nodegroup-type: private
+    subnets:
+      - ap-south-1a
+      - ap-south-1b

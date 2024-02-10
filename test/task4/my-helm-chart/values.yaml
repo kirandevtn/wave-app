@@ -1,0 +1,22 @@
+# values.yaml
+
+deployment:
+  replicas: 2
+  image:
+    repository: kirandevtn/html-image
+    tag: latest
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "256m"
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+
+service:
+  type: NodePort
+  port: 3000
+  targetPort: 80
+
+ingress:
+  host: your.domain.com
