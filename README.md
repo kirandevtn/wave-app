@@ -1,4 +1,4 @@
-# Chat Web App with Message Encryption and User Authentication
+## Chat Web App with Message Encryption and User Authentication
 You can checkout the live website here:👉🏻 https://rebrand.ly/wavy-project.
 
 Tech Used: Node.js, socket.io, crypto (node.js module), MongoDB, HTML, CSS, JavaScript, Ajax
